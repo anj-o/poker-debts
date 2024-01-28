@@ -1,0 +1,17 @@
+package main
+
+import "strconv"
+
+templ add_player(id int) {
+    <div class="person">
+        <label for={ "p" + strconv.Itoa(id) + "-name" }>Name</label>
+        <input name={ "p" + strconv.Itoa(id) + "-name" } required></input>
+        <label for={ "p" + strconv.Itoa(id) + "-buy-ins" }>Buy-ins</label>
+        <input name={ "p" + strconv.Itoa(id) + "-buy-ins" } type="number" min="1" value="1" required></input>
+        <label for={ "p" + strconv.Itoa(id) + "-final-stack" }>Final stack</label>
+        <input name={ "p" + strconv.Itoa(id) + "-final-stack" } type="number" min="0" required></input>
+    </div>
+}
+
+templ remove_player() {
+}

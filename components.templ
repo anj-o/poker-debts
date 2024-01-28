@@ -1,0 +1,39 @@
+package main
+
+templ home() {
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<body>
+    <h1>&spades;&hearts; Poker Debts &diams;&spades;</h1>
+    <form method="post" id="calculate" action="/">
+        <div class="game">
+            <h2>Game</h2>
+                <label for="buy-in">Buy-in ($)</label>
+                <input name="buy-in" type="number" min="0" step="0.01" required></input>
+                <label for="beginning-stack">Beginning Stack</label>
+                <input name="beginning-stack" type="number" min="0" step="1" required></input>
+        </div>
+        <h2>Players
+            <button
+                    hx-get="/add-player"
+                    hx-trigger="click"
+                    hx-target="next div"
+                    hx-swap="beforeend"
+            >+</button>
+            <button
+                    hx-get="/remove-player"
+                    hx-trigger="click"
+                    hx-target="next .person"
+                    hx-swap="delete"
+            >-</button>
+            <button type="reset">Clear</button>
+        </h2>
+        <div class="people">
+        @add_player(1)
+        @add_player(2)
+        </div>
+    </form>
+    <button type="submit" form="calculate" formaction="/">Submit</button>
+
+
+</body>
+}
