@@ -12,28 +12,30 @@ templ home() {
                 <label for="beginning-stack">Beginning Stack</label>
                 <input name="beginning-stack" type="number" min="0" step="1" required></input>
         </div>
-        <h2>Players
+        <h2>Players</h2>
+        <div class="people">
+            @add_player(1)
+            @add_player(2)
+        </div>
+        <div class="controls">
             <button
-                    hx-get="/add-player"
-                    hx-trigger="click"
-                    hx-target="next div"
-                    hx-swap="beforeend"
+                hx-get="/add-player"
+                hx-trigger="click"
+                hx-target="previous div"
+                hx-swap="afterend"
             >+</button>
             <button
-                    hx-get="/remove-player"
-                    hx-trigger="click"
-                    hx-target="next .person"
-                    hx-swap="delete"
+                hx-get="/remove-player"
+                hx-trigger="click"
+                hx-target="previous .person"
+                hx-swap="delete"
             >-</button>
-            <button type="reset">Clear</button>
-        </h2>
-        <div class="people">
-        @add_player(1)
-        @add_player(2)
+            <button
+                type="reset"
+            >Clear</button>
         </div>
+        <button type="submit" form="calculate" formaction="/">Submit</button>
     </form>
-    <button type="submit" form="calculate" formaction="/">Submit</button>
-
 
 </body>
 }
