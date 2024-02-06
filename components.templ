@@ -1,41 +1,96 @@
 package main
 
+import "strconv"
+
 templ home() {
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <body>
     <h1>&spades;&hearts; Poker Debts &diams;&spades;</h1>
-    <form method="post" id="calculate" action="/">
+    <form hx-post="/" hx-target="next .results" hx-swap="innerHTML">
         <div class="game">
             <h2>Game</h2>
-                <label for="buy-in">Buy-in ($)</label>
-                <input name="buy-in" type="number" min="0" step="0.01" required></input>
-                <label for="beginning-stack">Beginning Stack</label>
-                <input name="beginning-stack" type="number" min="0" step="1" required></input>
+                <table>
+                    <tr>
+                        <td>
+                        BuyInCost
+                        </td>
+                        <td>
+                        BeginStack
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <input name="buy-in" type="number" min="0" step="0.01" required></input>
+                        </td>
+                        <td>
+                        <input name="beginning-stack" type="number" min="0" step="1" required></input>
+                        </td>
+                    </tr>
+                </table>
         </div>
         <h2>Players</h2>
-        <div class="people">
+        <table>
+            <tr>
+                <td>
+                Name
+                </td>
+                <td>
+                BuyInCount
+                </td>
+                <td>
+                FinalStack
+                </td>
+            </tr>
             @add_player(1)
             @add_player(2)
-        </div>
-        <div class="controls">
+        </table>
+        <br></br>
+        <div class="controls" >
             <button
                 hx-get="/add-player"
                 hx-trigger="click"
-                hx-target="previous div"
+                hx-target="previous tr"
                 hx-swap="afterend"
             >+</button>
             <button
                 hx-get="/remove-player"
                 hx-trigger="click"
-                hx-target="previous .person"
+                hx-target="previous tr"
                 hx-swap="delete"
             >-</button>
             <button
                 type="reset"
             >Clear</button>
         </div>
-        <button type="submit" form="calculate" formaction="/">Submit</button>
+        <br></br>
+        <button hx-post="/">Submit</button>
     </form>
+    <div class="results"></div>
 
 </body>
+}
+
+templ add_player(id int) {
+    <tr class="person">
+        <td>
+        <input name={ "p" + strconv.Itoa(id) + "-name" } required></input>
+        </td>
+        <td>
+        <input name={ "p" + strconv.Itoa(id) + "-buy-ins" } type="number" min="1" value="1" required></input>
+        </td>
+        <td>
+        <input name={ "p" + strconv.Itoa(id) + "-final-stack" } type="number" min="0" required></input>
+        </td>
+    </tr>
+}
+
+templ remove_player() {
+}
+
+templ chain(l []string) {
+      <ul>
+      for _, item := range l {
+        <li>{ item }</li>
+      }
+      </ul>
 }
